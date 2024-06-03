@@ -33,7 +33,10 @@ import androidx.compose.ui.Modifier
 import android.app.DatePickerDialog
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -58,21 +61,24 @@ fun InformationScreen(viewModel: InformationViewModel) {
     Scaffold(topBar = {
         TopAppBar(
             title = { Text("Information App") },
+            colors = TopAppBarDefaults.topAppBarColors(MaterialTheme.colorScheme.primaryContainer)
         )
     }, floatingActionButton = {
         FloatingActionButton(onClick = { showDialog = true },
             content = { Icon(Icons.Default.Add, contentDescription = "Add") })
     }, content = { padding ->
-        if (allInformation.isEmpty()) {
-            EmptyInformationText()
-        } else {
-            LazyColumn(
-                contentPadding = padding,
-                verticalArrangement = Arrangement.spacedBy(16.dp),
-                modifier = Modifier.padding(horizontal = 16.dp)
-            ) {
-                items(allInformation) { info ->
-                    InformationCard(info)
+        Column(Modifier.padding(top = 16.dp)) {
+            if (allInformation.isEmpty()) {
+                EmptyInformationText()
+            } else {
+                LazyColumn(
+                    contentPadding = padding,
+                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                    modifier = Modifier.padding(horizontal = 16.dp)
+                ) {
+                    items(allInformation) { info ->
+                        InformationCard(info)
+                    }
                 }
             }
         }
